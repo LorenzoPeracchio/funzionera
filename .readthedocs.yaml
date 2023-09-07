@@ -11,3 +11,5 @@ python:
     # Install our python package before building the docs
     - method: pip
       path: .
+    - script:
+        - pip install torch==1.7
