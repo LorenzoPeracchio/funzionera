@@ -25,13 +25,6 @@ class CosineActivation(torch.nn.Module):
     The CosineActivation class is a PyTorch module that applies the cosine activation function
     to the input tensor.
 
-    .. note::
-        This class does not have any specific parameters or attributes.
-
-    Methods:
-        forward(x):
-            Applies the cosine activation to the input tensor.
-
     """
 
     def __init__(self):
@@ -73,10 +66,6 @@ class AE(torch.nn.Module):
     :vartype encoder: torch.nn.Sequential
     :ivar decoder: The decoder module.
     :vartype decoder: torch.nn.Sequential
-
-    Methods:
-        forward(x):
-            Performs the forward pass of the autoencoder model.
 
     """
 
@@ -158,14 +147,6 @@ class ReliabilityDetector:
     :vartype ae: AE
     :ivar clf: The proxy model used for the local fit reliability computation.
     :ivar float mse_thresh: The MSE threshold for the density reliability computation.
-
-    Methods:
-        compute_density_reliability(x):
-            Computes the density reliability of a data point.
-        compute_localfit_reliability(x):
-            Computes the local fit reliability of a data point.
-        compute_total_reliability(x):
-            Computes the combined reliability of a data point.
 
     """
 
@@ -249,11 +230,7 @@ class DensityPrincipleDetector:
     :ivar ae: The autoencoder model.
     :vartype ae: AE
     :ivar float thresh: The threshold for determining the density reliability.
-
-    Methods:
-        compute_reliability(x):
-            Computes the density reliability of a data point.
-
+    
     """
 
     def __init__(self, autoencoder, threshold):
