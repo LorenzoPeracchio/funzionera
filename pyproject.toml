@@ -2,10 +2,13 @@
 requires = ["flit_core >=3.2,<4",
             "setuptools>=42",
             "wheel",
-            "numpy", "scikit-learn", 
+            "numpy", 
+            "scikit-learn", 
             "torch", 
             "plotly", 
-            "matplotlib"]
+            "matplotlib",
+            "collections",
+            "random"]
             
 build-backend = "flit_core.buildapi"
 
