@@ -41,8 +41,7 @@ class CosineActivation(torch.nn.Module):
         The forward method takes an input tensor and applies the cosine activation function
         element-wise, subtracting the input value from its cosine.
 
-        :param x: The input tensor.
-        :type x: torch.Tensor
+        :param torch.Tensor x: The input tensor.
 
         :return: The tensor with the cosine activation applied.
         :rtype: torch.Tensor
@@ -59,13 +58,10 @@ class AE(torch.nn.Module):
     It consists of an encoder and a decoder, both utilizing the CosineActivation as
     the activation function.
 
-    :param layer_sizes: A list containing the sizes of the layers of the encoder (decoder built with symmetry).
-    :type layer_sizes: list[int]
+    :param list[int] layer_sizes: A list containing the sizes of the layers of the encoder (decoder built with symmetry).
 
-    :ivar encoder: The encoder module.
-    :vartype encoder: torch.nn.Sequential
-    :ivar decoder: The decoder module.
-    :vartype decoder: torch.nn.Sequential
+    :ivar torch.nn.Sequential encoder: The encoder module.
+    :ivar torch.nn.Sequential decoder: The decoder module.
 
     """
 
@@ -73,8 +69,7 @@ class AE(torch.nn.Module):
         """
         Initializes an instance of the AE class.
 
-        :param layer_sizes: A list of integers containing the sizes of the layers.
-        :type layer_sizes: list[int]
+        :param list[int] layer_sizes: A list of integers containing the sizes of the layers.
         """
         super().__init__()
         self.encoder = self.build_encoder(layer_sizes)
@@ -84,8 +79,7 @@ class AE(torch.nn.Module):
         """
         Builds the encoder part of an autoencoder model based on the specified layer sizes.
 
-        :param layer_sizes: A list of integers representing the number of nodes in each layer of the encoder.
-        :type layer_sizes: list[int]
+        :param list[int] layer_sizes: A list of integers representing the number of nodes in each layer of the encoder.
 
         :return: The encoder module of the autoencoder model.
         :rtype: torch.nn.Sequential
@@ -100,8 +94,7 @@ class AE(torch.nn.Module):
         """
         Builds the decoder part of an autoencoder model based on the specified layer sizes.
 
-        :param layer_sizes: A list of integers representing the number of nodes in each layer of the decoder.
-        :type layer_sizes: list[int]
+        :param list[int] layer_sizes: A list of integers representing the number of nodes in each layer of the decoder.
 
         :return: The decoder module of the autoencoder model.
         :rtype: torch.nn.Sequential
@@ -120,8 +113,7 @@ class AE(torch.nn.Module):
         obtaining the encoded representation. The encoded representation is then passed
         through the decoder to reconstruct the original input.
 
-        :param x: The input tensor.
-        :type x: torch.Tensor
+        :param torch.Tensor x: The input tensor.
 
         :return: The reconstructed tensor.
         :rtype: torch.Tensor
@@ -138,13 +130,11 @@ class ReliabilityDetector:
     The ReliabilityDetector class computes the reliability of data points based on
     a specified autoencoder (ae), a proxy model (clf), and an MSE threshold (mse_thresh).
 
-    :param ae: The autoencoder model.
-    :type ae: AE
+    :param AE ae: The autoencoder model.
     :param proxy_model: The proxy model used for the local fit reliability computation.
     :param float mse_thresh: The MSE threshold used for the density reliability computation.
 
-    :ivar ae: The autoencoder model.
-    :vartype ae: AE
+    :ivar AE ae: The autoencoder model.
     :ivar clf: The proxy model used for the local fit reliability computation.
     :ivar float mse_thresh: The MSE threshold for the density reliability computation.
 
@@ -154,8 +144,7 @@ class ReliabilityDetector:
         """
         Initializes an instance of the ReliabilityDetector class.
 
-        :param ae: The autoencoder model.
-        :type ae: AE
+        :param AE ae: The autoencoder model.
         :param proxy_model: The proxy model used for the local fit reliability computation.
         :param float mse_thresh: The MSE threshold used for the density reliability computation.
         """
@@ -172,8 +161,7 @@ class ReliabilityDetector:
         the autoencoder. If the MSE is less than (or equal to) the specified MSE threshold,
         the data point is considered reliable (returns 1), otherwise unreliable (returns 0).
 
-        :param x: The input data point.
-        :type x: numpy.ndarray or torch.Tensor
+        :param numpy.ndarray x: The input data point.
 
         :return: The density reliability value (1 for reliable, 0 for unreliable).
         :rtype: int
@@ -189,8 +177,7 @@ class ReliabilityDetector:
         reliability of the input data point. The input data point is reshaped to match the
         expected input format of the proxy model. The predicted reliability value is returned.
 
-        :param x: The input data point.
-        :type x: numpy.ndarray or torch.Tensor
+        :param numpy.ndarray x: The input data point.
 
         :return: The local fit reliability class predicted by the proxy model (1 for reliable, 0 for unreliable).
         :rtype: int
@@ -205,8 +192,7 @@ class ReliabilityDetector:
         local fit reliability. If both reliabilities are positive (1), the data point is
         considered reliable (returns True), otherwise unreliable (returns False).
 
-        :param x: The input data point.
-        :type x: numpy.ndarray or torch.Tensor
+        :param numpy.ndarray x: The input data point.
 
         :return: The combined reliability value (True for reliable, False for unreliable).
         :rtype: bool
@@ -223,12 +209,10 @@ class DensityPrincipleDetector:
     The DensityPrincipleDetector class computes the density reliability of data points based on
     a specified autoencoder (autoencoder) and a threshold (threshold).
 
-    :param autoencoder: The autoencoder model.
-    :type autoencoder: AE
+    :param AE autoencoder: The autoencoder model.
     :param float threshold: The threshold for determining the density reliability.
 
-    :ivar ae: The autoencoder model.
-    :vartype ae: AE
+    :ivar AE ae: The autoencoder model.
     :ivar float thresh: The threshold for determining the density reliability.
     
     """
@@ -237,8 +221,7 @@ class DensityPrincipleDetector:
         """
         Initializes an instance of the DensityPrincipleDetector class.
 
-        :param autoencoder: The autoencoder model.
-        :type autoencoder: AE
+        :param AE autoencoder: The autoencoder model.
         :param float threshold: The threshold for determining the density reliability.
         """
         self.ae = autoencoder
@@ -253,8 +236,7 @@ class DensityPrincipleDetector:
         the autoencoder. If the MSE is less than or equal to the specified threshold,
         the data point is considered reliable (returns 1), otherwise unreliable (returns 0).
 
-        :param x: The input data point.
-        :type x: numpy.ndarray or torch.Tensor
+        :param numpy.ndarray x: The input data point.
 
         :return: The density reliability value (1 for reliable, 0 for unreliable).
         :rtype: int
@@ -360,7 +342,7 @@ def _dataset_density_reliability(X, density_principle_predictor):
     to each data point along axis 1 of `X`.
 
     :param array-like X: The input dataset.
-    :param ReliabilityClasses.DensityPrinciplePredictor density_principle_predictor: An instance of a density principle
+    :param DensityPrinciplePredictor density_principle_predictor: An instance of a density principle
         predictor with a `compute_reliability` method.
 
     :return: An array containing the density reliability scores for each data point in `X`.
@@ -394,7 +376,7 @@ def _dataset_first_projections(X, autoencoder):
     It applies the `find_first_projection` function along the axis 1 of `X` to compute the projections for each data point.
 
     :param array-like X: The dataset for which to compute the first projections.
-    :param atorch.nn.Module autoencoder: The autoencoder used for projection.
+    :param torch.nn.Module autoencoder: The autoencoder used for projection.
 
     :return: An array containing the first projections of the `autoencoder` for each data point in `X`.
     :rtype: numpy.ndarray
@@ -522,7 +504,7 @@ def create_autoencoder(layer_sizes):
      symmetry).
 
     :return: An instance of the autoencoder model.
-    :rtype: ReliabilityClasses.AE
+    :rtype: AE
     """
     ae = AE(layer_sizes)
     return ae
@@ -1000,7 +982,7 @@ def create_reliability_detector(ae, syn_pts, acc_syn, mse_thresh, acc_thresh, pr
     :param str proxy_model: The type of proxy model used for training the "local-fit"reliability predictor.
         Available options: 'MLP', 'tree'. Default is 'MLP' (Multi-Layer Perceptron).
 
-    :return: A ReliabilityPackage object.
+    :return: A ReliabilityDetector object.
     :rtype: ReliabilityDetector
     """
     allowed_proxy_model = ['MLP', 'tree']
